@@ -1,0 +1,11 @@
+<figure class="images-wrap" ng-transclude></figure>
+<span ng-show="images.length > 1">
+	<ul class="bullets" sky-show="touch">
+		<li ng-repeat="(key,item) in images track by key" ng-class="{act:item.active}" ng-click="slide(key)"></li>
+	</ul>
+	<ul sky-show="!touch">
+		<li><button title="Forrige billede" ng-click="prev()" no-skyform></button></li>
+		<li><span>{{current}}/{{images.length}}</span></li>
+		<li><button title="N&aelig;ste billede" no-skyform ng-click="next()"></button></li>
+	</ul>
+</span>

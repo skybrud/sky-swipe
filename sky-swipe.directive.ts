@@ -30,6 +30,8 @@ declare var Swipe: any;
 		function link(scope,element,attributes) {
 			element.addClass('swipe-gallery');
 			scope.images=[];
+			
+			scope.touch = 'ontouchstart' in window || navigator.msMaxTouchPoints;
 
 			/* Build scope.images from the used elements */
 			angular.forEach(element.find('div'),function(element,key) {

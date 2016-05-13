@@ -1,6 +1,7 @@
 # sky-swipe
 
 Angular-module wrapper for swipe.js.
+https://github.com/thebird/Swipe
 
 Please refer to the code-files for usage and documentation!
 

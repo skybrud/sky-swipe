@@ -16,9 +16,9 @@ declare var Swipe: any;
 
 	angular.module('skySwipe').directive('skySwipe',skySwipe);
 
-	skySwipe.$inject = ['$timeout'];
+	skySwipe.$inject = ['$timeout', '$compile'];
 
-	function skySwipe($timeout) {
+	function skySwipe($timeout, $compile) {
 		var directive = {
 			restrict:'E',
 			transclude:true,
@@ -60,19 +60,20 @@ declare var Swipe: any;
 					 *
 					 **/
 					$timeout(function() {
-						angular.forEach(scope.images, function(item, key) {
-							if (which == key) {
+						// In case of 2 slides (the first and last will be duplicated)
+						scope.current = scope.images.length < 3 ? (which + 1) % 2 : which + 1;
+						
+						angular.forEach(scope.images, function(item,key) {
+							if (scope.current == key) {
 								scope.images[key] = {
-									active: true
+									active:true
 								};
 							} else {
 								scope.images[key] = {
-									active: false
+									active:false
 								};
 							}
 						});
-
-						scope.current = which + 1;
 
 					}, 0);
 				}
@@ -131,6 +132,14 @@ declare var Swipe: any;
 				canPlay = true;
 				playInterval();
 			}
+			
+			/**
+			 * Compile duplicated slides - this will be the case when
+			 * only 2 slides are present
+			 * 
+			 * @see https://github.com/thebird/Swipe/blob/master/swipe.js#L47
+			 */
+			$compile(element.find('figure').contents())(scope);
 		}
 
 		return directive;
